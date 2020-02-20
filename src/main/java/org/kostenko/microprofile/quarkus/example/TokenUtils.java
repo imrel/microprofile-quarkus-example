@@ -16,12 +16,12 @@ import java.util.UUID;
 
 public class TokenUtils {
 
-    public static String generateTokenString(Long profileId) throws Exception {
+    public static String generateJWT(String userName) {
 
         long currentTimeInSecs = currentTimeInSecs();
         
         Map<String, Object> claimMap = new HashMap<>();
-        claimMap.put("iss", "https://quarkus.io/using-jwt-rbac");
+        claimMap.put("iss", "https://kostenko.org");
         claimMap.put("sub", "jwt-rbac");
         claimMap.put("exp", Long.MAX_VALUE);
         claimMap.put("iat", currentTimeInSecs);
@@ -30,12 +30,18 @@ public class TokenUtils {
         claimMap.put("upn", "UPN");
         claimMap.put("groups", Arrays.asList("user"));
         claimMap.put("raw_token", UUID.randomUUID().toString());
-        claimMap.put("profileId", profileId);
+        claimMap.put("user_name", userName);
                 
         JwtClaimsBuilder claims = Jwt.claims(claimMap);
         claims.claim(Claims.auth_time.name(), currentTimeInSecs);
         
-        return claims.jws().signatureKeyId("META-INF/privateKey.pem").sign(readPrivateKey("META-INF/privateKey.pem"));
+        String jwt;
+        try {
+            jwt = claims.jws().signatureKeyId("META-INF/private_key.pem").sign(readPrivateKey("META-INF/private_key.pem"));
+        } catch(Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        return jwt;
     }
 
     public static PrivateKey readPrivateKey(final String pemResName) throws Exception {

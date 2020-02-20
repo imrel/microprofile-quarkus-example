@@ -1,5 +1,6 @@
-package ua.hackaton;
+package org.kostenko.microprofile.quarkus.example;
 
+import org.kostenko.microprofile.quarkus.example.ExampleResourceTest;
 import io.quarkus.test.junit.NativeImageTest;
 
 //@NativeImageTest

@@ -5,7 +5,7 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.json.JsonNumber;
+import javax.json.JsonString;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -38,8 +38,8 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 public class UserResource {
 
     @Inject
-    @Claim("userId")
-    Optional<JsonNumber> userId;
+    @Claim("user_name")
+    Optional<JsonString> userName;
 
     @POST
     @PermitAll
@@ -49,8 +49,9 @@ public class UserResource {
         @APIResponse(responseCode = "200", description = "JWT successfuly created.", content = @Content(schema = @Schema(implementation = User.class)))})
     @Operation(summary = "Create JWT token by provided user name")
     public User getToken(@PathParam("userName") String userName) {
-        return null;
-    }
+        User user = new User();
+        user.setJwt(TokenUtils.generateJWT(userName));
+        return user;    }
 
     @GET
     @RolesAllowed("user")
@@ -61,6 +62,8 @@ public class UserResource {
         @APIResponse(responseCode = "200", description = "Return user data", content = @Content(schema = @Schema(implementation = User.class)))})
     @Operation(summary = "Return user data by provided JWT token")
     public User getUser() {
-        return new User();
+        User user = new User();
+        user.setName(userName.get().getString());
+        return user;
     }
 }

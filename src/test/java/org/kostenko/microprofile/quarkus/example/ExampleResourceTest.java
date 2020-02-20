@@ -1,4 +1,4 @@
-package ua.hackaton;
+package org.kostenko.microprofile.quarkus.example;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;

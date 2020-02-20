@@ -7,7 +7,7 @@ package org.kostenko.microprofile.quarkus.example;
 public class User {
 
     private String name;
-    private String phoneNumber;
+    private String jwt;
 
     public String getName() {
         return name;
@@ -17,11 +17,12 @@ public class User {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getJwt() {
+        return jwt;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
     }
+    
 }
