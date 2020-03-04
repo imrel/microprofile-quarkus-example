@@ -51,7 +51,8 @@ public class UserResource {
     public User getToken(@PathParam("userName") String userName) {
         User user = new User();
         user.setJwt(TokenUtils.generateJWT(userName));
-        return user;    }
+        return user;
+    }
 
     @GET
     @RolesAllowed("user")
