@@ -1,4 +1,4 @@
-package org.kostenko.microprofile.quarkus.example;
+package org.kostenko.microprofile.quarkus.example.user;
 
 /**
  *
